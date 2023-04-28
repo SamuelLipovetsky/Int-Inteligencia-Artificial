@@ -1,41 +1,41 @@
 from collections import deque
 
-
 class breadthFirst():
-    def __init__(self, dict, start):
-        self.dict = dict
-        self.start = start
-        self.path ={}
+    
+    def __init__(self, dict, start,end):
+        self.graph =dict
+        self.start =start
+        self.end =end
 
-    def search(self, start, target):
+    def getPath(self):
+        queue = deque([self.start])
+        visited = {self.start: None}
+        # print(self.start,self.end)
+        while len(queue)>0:
+        
+            v = queue.popleft()
+           
+            if v == self.end:
+                path = []
+                
+                while v is not None:
+                    path.append(v)
+                    v = visited[v]
+                #goes over path list and sum all the distances
+                self.size = sum(self.graph[path[i]][path[i+1]] for i in range(len(path)-1))
+                self.path = path[::-1] 
+                return
+        
+            for i in self.graph[v].keys():
+                neighbor = i
+                if neighbor not in visited:
+                    visited[neighbor] = v
+                    queue.append(neighbor)
 
-        target = ','.join(str(x) for x in target)
-        start = ','.join(str(x) for x in start)
-        queue = deque([(start, 0)])
-        visited = set()
+    
+    def printPath(self, printPath):
+        print(self.size ,len(self.path)-1)
+        if printPath:
+            for i in self.path:
+                print((' '.join(str(x) for x in i)).replace(",",""))
 
-        while len(queue) > 0:
-
-            node, d = queue.popleft()
-
-            if node in visited:
-                continue
-            visited.add(node)
-            if node == target:
-                return d
-            
-            for i in self.dict[node].keys():
-                if i not in visited:
-                    self.path[i]= node
-                queue.append((i, d+self.dict[node][i]))
-
-    def trace_path(self,start,target):
-        tracer = target
-        # print(self.path['1,2,3,4,5'])
-        # print(self.path['5,2,3,4,1'])
-        # print(self.path[''])
-        # print(self.path['4,2,3,5,1'])
-        while tracer!=start:
-            print(tracer)
-            tracer=self.path[tracer]
-            

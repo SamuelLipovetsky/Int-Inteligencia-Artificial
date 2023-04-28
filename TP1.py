@@ -1,6 +1,6 @@
 from copy import deepcopy
 from BreadthFirst import breadthFirst
-
+import sys 
 # This class generates a dictionary that works as an adjacency List
 class adjacencyDict():
     def __init__(self, list):
@@ -30,7 +30,7 @@ class adjacencyDict():
                     a,b,c = i
                     swap_list = self.swap(poped_list, a, b)
                     swap_string_list = ','.join(str(x) for x in swap_list)
-                    self.dict[poped_ele][swap_string_list] = c
+                    self.dict[poped_ele][swap_string_list]=c
                     stack.append(swap_string_list)
 
     # simple swap function
@@ -42,16 +42,27 @@ class adjacencyDict():
         list[b] = temp
         return list
 
+from collections import deque
+
+
 
 def main():
-    obj = adjacencyDict([1, 2, 3, 4, 5])
-    obj.generatePermutationsList(5)
 
-    obj.populateAdjList([1, 2, 3, 4, 5])
+    algType = sys.argv[1]
+    size = int(sys.argv[2])
+    start =[]
+    
+    for i in range(3,int(size)+3):
+        start.append(sys.argv[i])
+    
+    adjList = adjacencyDict( start)
+    adjList.generatePermutationsList(size)
+    adjList.populateAdjList(start)
 
-    obj1 = breadthFirst(obj.dict, [5, 3, 2, 4, 1])
-    print(obj1.search([5, 3, 2, 4, 1], [1, 2, 3, 4, 5]))
-    obj1.trace_path('1,2,3,4,5','5,3,2,4,1')
+    if algType=="B":
+        obj1 = breadthFirst(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(start)))
+        obj1.getPath()
+        obj1.printPath( sys.argv[-1] =="PRINT")
 
 
 main()
