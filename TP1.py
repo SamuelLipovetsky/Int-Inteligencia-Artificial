@@ -1,7 +1,4 @@
-
-
-import sys
-sys.setrecursionlimit(15000000)
+from collections import deque
 class adjacencyDict():
     def __init__(self,list):
         self.dict={}
@@ -29,8 +26,12 @@ class adjacencyDict():
                     c= i[2]
                     swap_list= self.swap(poped_list,a,b)
                     swap_string_list = ','.join(str(x) for x in swap_list)
-                    self.dict[string_list][swap_string_list]=c
+                    self.dict[poped_ele][swap_string_list]=c
                     stack.append(swap_string_list)
+           
+
+            
+
                     
     def swap(self,list,a,b):
         
@@ -40,14 +41,45 @@ class adjacencyDict():
         return list
 
 
+class breadthFirst():
+    def __init__(self,dict,start):
+        self.dict=dict
+        self.start = start
+        
+
+    def search(self,start,target):
+       
+        target = ','.join(str(x) for x in target)
+        start = ','.join(str(x) for x in start)
+        queue = deque([(start,0)])
+        visited= set()
+        
+        while len(queue)>0:
+            node ,d =queue.popleft()
+          
+            if node in visited :
+                continue
+            visited.add(node)
+            if node == target:
+                return d
+            
+            print(self.dict[node])
+            for i in self.dict[node].keys():
+              
+                    queue.append((i, self.dict[node][i]))
 
 
 def main():
-    obj = adjacencyDict([1,2,3,4,5,5,6,7,8])
-    obj.generatePermutationsList(8)
-    obj.populateAdjList([1,2,3,4,5,6,7,8])
-    print(len(obj.dict.keys()))
+    obj = adjacencyDict([3,4,5])
+    obj.generatePermutationsList(3)
+    obj.populateAdjList([3,4,5])
     # print(obj.dict)
-    print(obj.permList)
+    # print(len(obj.dict.keys()))
+    # for i in obj.dict.keys():
+    #     print(obj.dict[i])
+      
+      
+    obj1 =breadthFirst(obj.dict,[5,4,3])
+    print(obj1.search([5,4,3],[3,4,5]))
 
 main()
