@@ -17,7 +17,6 @@ class breadthFirst():
            
             if v == self.end:
                 path = []
-                
                 while v is not None:
                     path.append(v)
                     v = visited[v]

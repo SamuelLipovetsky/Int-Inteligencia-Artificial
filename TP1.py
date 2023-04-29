@@ -1,5 +1,7 @@
 from copy import deepcopy
 from BreadthFirst import breadthFirst
+from IterativeDeepening import iterativeDeepening
+import time
 import sys 
 # This class generates a dictionary that works as an adjacency List
 class adjacencyDict():
@@ -42,9 +44,6 @@ class adjacencyDict():
         list[b] = temp
         return list
 
-from collections import deque
-
-
 
 def main():
 
@@ -60,9 +59,20 @@ def main():
     adjList.populateAdjList(start)
 
     if algType=="B":
-        obj1 = breadthFirst(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(start)))
-        obj1.getPath()
-        obj1.printPath( sys.argv[-1] =="PRINT")
+        start_ = time.time()
+        obj = breadthFirst(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(start)))
+        obj.getPath()
+        obj.printPath( sys.argv[-1] =="PRINT")
+        end_ = time.time()
+        print(end_ - start_)
+    
+    if algType=="I":
+        start_ = time.time()
+        obj = iterativeDeepening(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(start)),size)
+        obj.getPath()
+        obj.printPath( sys.argv[-1] =="PRINT")
+        end_ = time.time()
+        print(end_ - start_)
 
 
 main()
