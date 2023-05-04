@@ -31,9 +31,12 @@ class iterativeDeepening():
                         v = visited[v]
                     
                     #goes over path list and sum all the distances
-                    self.size = sum(self.graph[path[i]][path[i+1]] for i in range(len(path)-1))
-                    self.path = path[::-1] 
-                    return
+                    new_size =sum(self.graph[path[i]][path[i+1]] for i in range(len(path)-1))
+                    if self.size> new_size:
+                        self.size=new_size
+                    # self.size = min(self.size,sum(self.graph[path[i]][path[i+1]] for i in range(len(path)-1)))
+                        self.path = path[::-1] 
+                    # return
             
                 for i in self.graph[v].keys():
                     neighbor = i

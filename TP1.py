@@ -30,21 +30,20 @@ class adjacencyDict():
                 self.dict[poped_ele] = {}
                 for i in self.permList:
                     a,b,c = i
-                    swap_list = self.swap(poped_list, a, b)
-                    swap_string_list = ','.join(str(x) for x in swap_list)
-                    self.dict[poped_ele][swap_string_list]=c
-                    stack.append(swap_string_list)
-        
+                    if poped_list[a] > poped_list[b]:
+                        swap_list = self.swap(poped_list, a, b)
+                        swap_string_list = ','.join(str(x) for x in swap_list)
+                        self.dict[poped_ele][swap_string_list]=c
+                        stack.append(swap_string_list)
 
     # simple swap function
     def swap(self, list, a, b):
-        # needs to copy bc python always pass immutable objs as refence
+    
+            # needs to copy bc python always pass immutable objs as refence
         list = deepcopy(list)
-        if  1==1:
-            temp = list[a]
-            list[a] = list[b]
-            list[b] = temp
-            return list
+        temp = list[a]
+        list[a] = list[b]
+        list[b] = temp
         return list
 
 
@@ -57,25 +56,25 @@ def main():
     for i in range(3,int(size)+3):
         start.append(sys.argv[i])
     
-    # adjList = adjacencyDict( start)
-    # adjList.generatePermutationsList(size)
-    # adjList.populateAdjList(start)
-
+    adjList = adjacencyDict( start)
+    adjList.generatePermutationsList(size)
+    adjList.populateAdjList(start)
+    # print(adjList.dict)
     if algType=="B":
         start_ = time.time()
-        obj = breadthFirst(','.join(str(x) for x in start), ','.join(str(x) for x in sorted(start)),len(start))
+        obj = breadthFirst(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(start)))
         obj.getPath()
         obj.printPath( sys.argv[-1] =="PRINT")
         end_ = time.time()
         print(end_ - start_)
     
-    # if algType=="I":
-    #     start_ = time.time()
-    #     obj = iterativeDeepening(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(start)),size)
-    #     obj.getPath()
-    #     obj.printPath( sys.argv[-1] =="PRINT")
-    #     end_ = time.time()
-    #     print(end_ - start_)
+    if algType=="I":
+        start_ = time.time()
+        obj = iterativeDeepening(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(start)),size)
+        obj.getPath()
+        obj.printPath( sys.argv[-1] =="PRINT")
+        end_ = time.time()
+        print(end_ - start_)
 
 
 main()
