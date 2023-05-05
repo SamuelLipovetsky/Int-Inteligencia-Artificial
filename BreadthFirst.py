@@ -15,15 +15,13 @@ class breadthFirst():
         while len(queue)>0:
         
             v = queue.popleft()
-           
+        
             if v == self.end:
                 path = []
                 while v is not None:
                     path.append(v)
                     v = visited[v]
-                
-                # print(path)
-                
+
                 new_size =sum(self.graph[path[i+1]][path[i]] for i in range(len(path)-1))
                 if self.size > new_size:
                         self.size=new_size

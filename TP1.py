@@ -18,6 +18,7 @@ class adjacencyDict():
 
     # Use the swap list to generate all possible permutations of any list and populates the Adj list
     def populateAdjList(self, list):
+        print(list)
         stack = []
         temp_list = list
         #python cannot hash lists , so all lists are treated as strings when necessary 
@@ -25,7 +26,9 @@ class adjacencyDict():
         stack.append(string_list)
         while len(stack) > 0:
             poped_ele = stack.pop()
-            poped_list = poped_ele.split(",")
+            poped_list = [int(i) for i in poped_ele.split(",")]
+            
+            # print(list(map(int,poped_list)))
             if poped_ele not in self.dict.keys():
                 self.dict[poped_ele] = {}
                 for i in self.permList:
@@ -54,15 +57,19 @@ def main():
     start =[]
     
     for i in range(3,int(size)+3):
-        start.append(sys.argv[i])
+        start.append(int(sys.argv[i]))
+ 
     
     adjList = adjacencyDict( start)
+    
     adjList.generatePermutationsList(size)
+  
     adjList.populateAdjList(start)
-    # print(adjList.dict)
+   
     if algType=="B":
         start_ = time.time()
-        obj = breadthFirst(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(start)))
+        
+        obj = breadthFirst(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(list(map(int,start)))))
         obj.getPath()
         obj.printPath( sys.argv[-1] =="PRINT")
         end_ = time.time()

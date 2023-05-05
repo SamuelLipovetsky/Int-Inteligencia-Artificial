@@ -7,24 +7,20 @@ class iterativeDeepening():
         self.graph =dict
         self.start =start
         self.end =end
-        self.bFactor = (size-1)*(size)/2
-
-
+       
     def getPath(self):
         for depth in range(1,10000):
             n_nodes=0
             queue = deque([self.start])
             visited = {self.start: None}
-            # print(self.start,self.end)    
-           
-            nodesPerDepth= sum([pow(self.bFactor,i) for i in range(depth)])
 
-            while len(queue)>0 and n_nodes<nodesPerDepth:
+           
+            while len(queue)>0 :
                 n_nodes+=1
                 v = queue.popleft()
 
                 if v == self.end:
-                    print(depth,"----")
+                   
                     path = []
                     while v is not None:
                         path.append(v)
