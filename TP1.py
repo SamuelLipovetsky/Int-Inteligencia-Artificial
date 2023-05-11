@@ -77,7 +77,7 @@ def main():
     
     if algType=="I":
         start_ = time.time()
-        obj = iterativeDeepening(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(start)),size)
+        obj = iterativeDeepening(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(list(map(int,start)))))
         obj.getPath()
         obj.printPath( sys.argv[-1] =="PRINT")
         end_ = time.time()
