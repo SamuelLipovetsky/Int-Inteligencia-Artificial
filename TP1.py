@@ -1,6 +1,7 @@
 from copy import deepcopy
 from BreadthFirst import breadthFirst
 from IterativeDeepening import iterativeDeepening
+from uniformCost import uniformCostSearch
 import time
 import sys 
 # This class generates a dictionary that works as an adjacency List
@@ -66,7 +67,7 @@ def main():
   
     adjList.populateAdjList(start)
    
-    if algType=="B":
+    if algType=="B" or algType =="ALL":
         start_ = time.time()
         
         obj = breadthFirst(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(list(map(int,start)))))
@@ -75,9 +76,17 @@ def main():
         end_ = time.time()
         print(end_ - start_)
     
-    if algType=="I":
+    if algType=="I" or algType =="ALL":
         start_ = time.time()
         obj = iterativeDeepening(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(list(map(int,start)))))
+        obj.getPath()
+        obj.printPath( sys.argv[-1] =="PRINT")
+        end_ = time.time()
+        print(end_ - start_)
+
+    if algType=="U"  or algType =="ALL":
+        start_ = time.time()
+        obj = uniformCostSearch(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(list(map(int,start)))))
         obj.getPath()
         obj.printPath( sys.argv[-1] =="PRINT")
         end_ = time.time()

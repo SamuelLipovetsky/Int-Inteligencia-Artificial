@@ -24,10 +24,10 @@ class iterativeDeepening():
                         path.append(v)
                         v = visited[v][0]
 
-                    new_size =sum(self.graph[path[i+1]][path[i]] for i in range(len(path)-1))
-                    if self.size > new_size:
-                            self.size=new_size
-                            self.path = path[::-1] 
+                    self.size =sum(self.graph[path[i+1]][path[i]] for i in range(len(path)-1))
+                   
+                    # self.size=new_size
+                    self.path = path[::-1] 
                     return
                 if visited[v][1]<depth:
                     for i in self.graph[v].keys():
