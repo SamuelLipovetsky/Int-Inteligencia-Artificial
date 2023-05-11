@@ -6,7 +6,7 @@ class iterativeDeepening():
         self.graph =dict
         self.start =start
         self.end =end
-        self.size=10000
+        
 
     def getPath(self):
         

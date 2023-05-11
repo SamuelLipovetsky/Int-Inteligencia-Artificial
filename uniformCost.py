@@ -1,43 +1,62 @@
-from heapq import *
+import heapq
+
 
 class uniformCostSearch():
-    
-    def __init__(self, dict, start,end):
-        self.graph =dict
-        self.start =start
-        self.end =end
-        
+
+    def __init__(self, dict, start, end):
+        self.adj_list = dict
+        self.start = start
+        self.end = end
+        self.path = []
+        self.result = []
 
     def getPath(self):
-        queue = [self.start]
-        visited = {self.start: None}
-        # print(self.start,self.end)
-        while len(queue)>0:
-        
-            v = heappop(queue)
-        
-            if v == self.end:
-                path = []
-                while v is not None:
-                    path.append(v)
-                    v = visited[v]
 
-                self.size =sum(self.graph[path[i+1]][path[i]] for i in range(len(path)-1))
-                
-                        # self.size=new_size
-                self.path = path[::-1] 
-                break
-        
-            for i in self.graph[v].keys():
-                neighbor = i
-                if neighbor not in visited:
-                    visited[neighbor] = v
-                    heappush(queue,neighbor)
-                    # queue.append(neighbor)
+     
 
-    
+        queue = [(0, [self.start])]
+
+        visited = set()
+
+        best_path_cost = {self.start: 0}
+
+        best_path = {self.start: [self.start]}
+
+        while queue:
+
+            path_cost, path = heapq.heappop(queue)
+            node = path[-1]
+
+            if node == self.end:
+                self.path = path
+                self.result = path_cost
+
+            if node not in visited:
+
+                visited.add(node)
+
+                best_path_cost[node] = path_cost
+                best_path[node] = path
+
+                for neighbor, cost in self.adj_list[node].items():
+                    if neighbor not in visited:
+
+                        new_path_cost = path_cost + cost
+                        new_path = path + [neighbor]
+                        heapq.heappush(queue, (new_path_cost, new_path))
+                    elif path_cost + cost < best_path_cost[neighbor]:
+
+                        best_path_cost[neighbor] = path_cost + cost
+                        best_path[neighbor] = path + [neighbor]
+
+                        new_path_cost = path_cost + cost
+                        new_path = path + [neighbor]
+                        heapq.heappush(queue, (new_path_cost, new_path))
+
+        return None
+
     def printPath(self, printPath):
-        print(self.size ,len(self.path)-1)
+        print(self.result, len(self.path)-1)
         if printPath:
             for i in self.path:
-                print((' '.join(str(x) for x in i)).replace(",",""))
+                print((' '.join(str(x) for x in i)).replace(",", ""))

@@ -89,6 +89,7 @@ def main():
         obj = uniformCostSearch(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(list(map(int,start)))))
         obj.getPath()
         obj.printPath( sys.argv[-1] =="PRINT")
+        # a,b = ucs(adjList.dict,','.join(str(x) for x in start),','.join(str(x) for x in sorted(list(map(int,start)))))
         end_ = time.time()
         print(end_ - start_)
 
