@@ -2,6 +2,8 @@ from copy import deepcopy
 from BreadthFirst import breadthFirst
 from IterativeDeepening import iterativeDeepening
 from uniformCost import uniformCostSearch
+from aStar import  aStarSearch
+from greedySearch import greedySearch
 import time
 import sys 
 # This class generates a dictionary that works as an adjacency List
@@ -87,6 +89,24 @@ def main():
     if algType=="U"  or algType =="ALL":
         start_ = time.time()
         obj = uniformCostSearch(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(list(map(int,start)))))
+        obj.getPath()
+        obj.printPath( sys.argv[-1] =="PRINT")
+        # a,b = ucs(adjList.dict,','.join(str(x) for x in start),','.join(str(x) for x in sorted(list(map(int,start)))))
+        end_ = time.time()
+        print(end_ - start_)
+
+    if algType=="A"  or algType =="ALL":
+        start_ = time.time()
+        obj = aStarSearch(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(list(map(int,start)))))
+        obj.getPath()
+        obj.printPath( sys.argv[-1] =="PRINT")
+        # a,b = ucs(adjList.dict,','.join(str(x) for x in start),','.join(str(x) for x in sorted(list(map(int,start)))))
+        end_ = time.time()
+        print(end_ - start_)
+
+    if algType=="G"  or algType =="ALL":
+        start_ = time.time()
+        obj = greedySearch(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(list(map(int,start)))))
         obj.getPath()
         obj.printPath( sys.argv[-1] =="PRINT")
         # a,b = ucs(adjList.dict,','.join(str(x) for x in start),','.join(str(x) for x in sorted(list(map(int,start)))))

@@ -1,7 +1,7 @@
 import heapq
 
 
-class aStarSearch():
+class greedySearch():
 
     def __init__(self, dict, start, end):
         self.adj_list = dict
@@ -83,7 +83,7 @@ class aStarSearch():
                 best_path[node] = path
 
                 for neighbor, cost in self.adj_list[node].items():
-                    inversions_node = self.countInversions(node.split(","))
+                  
                     inversions_neigh = self.countInversions(neighbor.split(","))
                     heuristic =0
 
@@ -93,21 +93,21 @@ class aStarSearch():
                     heuristic = inversions_neigh
                     if neighbor not in visited:
                         
-                        path_cost_return = path_cost + cost 
-                        new_path_cost = path_cost + cost + heuristic
+                        
+                        new_path_cost = path_cost + heuristic
                         
                         new_path = path + [neighbor]
                         heapq.heappush(queue, (new_path_cost, new_path))
 
                     
-                    elif path_cost + cost +heuristic < best_path_cost[neighbor]:
+                    elif path_cost +heuristic < best_path_cost[neighbor]:
 
-                        best_path_cost[neighbor] = path_cost + cost +heuristic
+                        best_path_cost[neighbor] = path_cost + heuristic
                         
 
                         best_path[neighbor] = path + [neighbor]
-                        path_cost_return =path_cost + cost 
-                        new_path_cost = path_cost + cost + heuristic
+                      
+                        new_path_cost = path_cost +  heuristic
                         new_path = path + [neighbor]
                         heapq.heappush(queue, (new_path_cost, new_path))
 

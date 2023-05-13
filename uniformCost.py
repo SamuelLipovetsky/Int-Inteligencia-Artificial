@@ -9,10 +9,8 @@ class uniformCostSearch():
         self.end = end
         self.path = []
         self.result = []
-
+        self.expansions =0
     def getPath(self):
-
-     
 
         queue = [(0, [self.start])]
 
@@ -25,11 +23,13 @@ class uniformCostSearch():
         while queue:
 
             path_cost, path = heapq.heappop(queue)
+            self.expansions+=1
             node = path[-1]
 
             if node == self.end:
                 self.path = path
                 self.result = path_cost
+                return
 
             if node not in visited:
 
@@ -56,7 +56,7 @@ class uniformCostSearch():
         return None
 
     def printPath(self, printPath):
-        print(self.result, len(self.path)-1)
+        print(self.result, len(self.path)-1,self.expansions)
         if printPath:
             for i in self.path:
                 print((' '.join(str(x) for x in i)).replace(",", ""))

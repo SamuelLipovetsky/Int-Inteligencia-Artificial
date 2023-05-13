@@ -7,6 +7,7 @@ class breadthFirst():
         self.start =start
         self.end =end
         self.size=10000
+        self.expansions=0
 
     def getPath(self):
         queue = deque([self.start])
@@ -15,7 +16,7 @@ class breadthFirst():
         while len(queue)>0:
         
             v = queue.popleft()
-        
+            self.expansions+=1
             if v == self.end:
                 path = []
                 while v is not None:
@@ -36,7 +37,7 @@ class breadthFirst():
 
     
     def printPath(self, printPath):
-        print(self.size ,len(self.path)-1)
+        print(self.size ,len(self.path)-1,self.expansions)
         if printPath:
             for i in self.path:
                 print((' '.join(str(x) for x in i)).replace(",",""))
