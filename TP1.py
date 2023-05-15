@@ -2,11 +2,13 @@ from copy import deepcopy
 from BreadthFirst import breadthFirst
 from IterativeDeepening import iterativeDeepening
 from uniformCost import uniformCostSearch
-from aStar import  aStarSearch
+from aStar import aStarSearch
 from greedySearch import greedySearch
 import time
-import sys 
+import sys
 # This class generates a dictionary that works as an adjacency List
+
+
 class adjacencyDict():
     def __init__(self, list):
         self.dict = {}
@@ -21,31 +23,30 @@ class adjacencyDict():
 
     # Use the swap list to generate all possible permutations of any list and populates the Adj list
     def populateAdjList(self, list):
-        print(list)
+     
         stack = []
         temp_list = list
-        #python cannot hash lists , so all lists are treated as strings when necessary 
+        # python cannot hash lists , so all lists are treated as strings when necessary
         string_list = ','.join(str(x) for x in temp_list)
         stack.append(string_list)
         while len(stack) > 0:
             poped_ele = stack.pop()
             poped_list = [int(i) for i in poped_ele.split(",")]
-            
-            # print(list(map(int,poped_list)))
+
             if poped_ele not in self.dict.keys():
                 self.dict[poped_ele] = {}
                 for i in self.permList:
-                    a,b,c = i
+                    a, b, c = i
                     if poped_list[a] > poped_list[b]:
                         swap_list = self.swap(poped_list, a, b)
                         swap_string_list = ','.join(str(x) for x in swap_list)
-                        self.dict[poped_ele][swap_string_list]=c
+                        self.dict[poped_ele][swap_string_list] = c
                         stack.append(swap_string_list)
 
     # simple swap function
     def swap(self, list, a, b):
-    
-            # needs to copy bc python always pass immutable objs as refence
+
+        # needs to copy bc python always pass immutable objs as refence
         list = deepcopy(list)
         temp = list[a]
         list[a] = list[b]
@@ -57,61 +58,65 @@ def main():
 
     algType = sys.argv[1]
     size = int(sys.argv[2])
-    start =[]
-    
-    for i in range(3,int(size)+3):
+    start = []
+
+    for i in range(3, int(size)+3):
         start.append(int(sys.argv[i]))
- 
-    
-    adjList = adjacencyDict( start)
-    
+
+    adjList = adjacencyDict(start)
+
     adjList.generatePermutationsList(size)
-  
+
     adjList.populateAdjList(start)
-   
-    if algType=="B" or algType =="ALL":
-        start_ = time.time()
-        
-        obj = breadthFirst(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(list(map(int,start)))))
-        obj.getPath()
-        obj.printPath( sys.argv[-1] =="PRINT")
-        end_ = time.time()
-        print(end_ - start_)
-    
-    if algType=="I" or algType =="ALL":
-        start_ = time.time()
-        obj = iterativeDeepening(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(list(map(int,start)))))
-        obj.getPath()
-        obj.printPath( sys.argv[-1] =="PRINT")
-        end_ = time.time()
-        print(end_ - start_)
 
-    if algType=="U"  or algType =="ALL":
+    if algType == "B" or algType == "ALL":
         start_ = time.time()
-        obj = uniformCostSearch(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(list(map(int,start)))))
-        obj.getPath()
-        obj.printPath( sys.argv[-1] =="PRINT")
-        # a,b = ucs(adjList.dict,','.join(str(x) for x in start),','.join(str(x) for x in sorted(list(map(int,start)))))
-        end_ = time.time()
-        print(end_ - start_)
 
-    if algType=="A"  or algType =="ALL":
-        start_ = time.time()
-        obj = aStarSearch(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(list(map(int,start)))))
+        obj = breadthFirst(adjList.dict, ','.join(str(x) for x in start), ','.join(
+            str(x) for x in sorted(list(map(int, start)))))
         obj.getPath()
-        obj.printPath( sys.argv[-1] =="PRINT")
-        # a,b = ucs(adjList.dict,','.join(str(x) for x in start),','.join(str(x) for x in sorted(list(map(int,start)))))
+        obj.printPath(sys.argv[-1] == "PRINT")
         end_ = time.time()
-        print(end_ - start_)
+        # print(end_ - start_)
 
-    if algType=="G"  or algType =="ALL":
+    if algType == "I" or algType == "ALL":
         start_ = time.time()
-        obj = greedySearch(adjList.dict, ','.join(str(x) for x in start), ','.join(str(x) for x in sorted(list(map(int,start)))))
+        obj = iterativeDeepening(adjList.dict, ','.join(str(x) for x in start), ','.join(
+            str(x) for x in sorted(list(map(int, start)))))
         obj.getPath()
-        obj.printPath( sys.argv[-1] =="PRINT")
-        # a,b = ucs(adjList.dict,','.join(str(x) for x in start),','.join(str(x) for x in sorted(list(map(int,start)))))
+        obj.printPath(sys.argv[-1] == "PRINT")
         end_ = time.time()
-        print(end_ - start_)
+        # print(end_ - start_)
+
+    if algType == "U" or algType == "ALL":
+        start_ = time.time()
+        obj = uniformCostSearch(adjList.dict, ','.join(str(x) for x in start), ','.join(
+            str(x) for x in sorted(list(map(int, start)))))
+        obj.getPath()
+        obj.printPath(sys.argv[-1] == "PRINT")
+
+        end_ = time.time()
+        # print(end_ - start_)
+
+    if algType == "A" or algType == "ALL":
+        start_ = time.time()
+        obj = aStarSearch(adjList.dict, ','.join(str(x) for x in start), ','.join(
+            str(x) for x in sorted(list(map(int, start)))))
+        obj.getPath()
+        obj.printPath(sys.argv[-1] == "PRINT")
+
+        end_ = time.time()
+        # print(end_ - start_)
+
+    if algType == "G" or algType == "ALL":
+        start_ = time.time()
+        obj = greedySearch(adjList.dict, ','.join(str(x) for x in start), ','.join(
+            str(x) for x in sorted(list(map(int, start)))))
+        obj.getPath()
+        obj.printPath(sys.argv[-1] == "PRINT")
+
+        end_ = time.time()
+        # print(end_ - start_)
 
 
 main()
